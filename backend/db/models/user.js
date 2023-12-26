@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
+      firstName: {
+        type: DataTypes.STRING
+      },
+      lastName: {
+        type: DataTypes.STRING
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -42,7 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     }, {
       sequelize,
-      modelName: 'User'
+      modelName: 'User',
+      defaultScope: {
+        attributes: {
+          // exclude: ['hashedPassword', 'createdAt', 'updatedAt']
+        }
+      }
     }
   );
   return User;
