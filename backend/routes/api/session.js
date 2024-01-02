@@ -73,11 +73,11 @@ router.get(
     (req, res) => {
       const { user } = req;
       if (user) {
-        const safeUser = {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-        };
+        const safeUser = { id: user.id };
+        if(user.firstName) safeUser.firstName = user.firstName;
+        if(user.lastName) safeUser.lastName = user.lastName;
+        safeUser.email = user.email;
+        safeUser.username = user.username
         return res.json({
           user: safeUser
         });

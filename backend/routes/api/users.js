@@ -13,8 +13,8 @@ const validateSignup = [
     .withMessage('Please provide a valid email.'),
   check('username')
     .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
-    .withMessage('Please provide a username with at least 4 characters.'),
+    .isLength({ min: 3 })
+    .withMessage('Please provide a username with at least 3 characters.'),
   check('username')
     .not()
     .isEmail()
@@ -35,11 +35,11 @@ router.post(
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({ email, username, hashedPassword });
 
-    const safeUser = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    };
+    const safeUser = { id: user.id };
+    if(user.firstName) safeUser.firstName = user.firstName;
+    if(user.lastName) safeUser.lastName = user.lastName;
+    safeUser.email = user.email;
+    safeUser.username = user.username
 
     await setTokenCookie(res, safeUser);
 
