@@ -20,7 +20,7 @@ module.exports = {
         lat: 8.06,
         lng: 7.48,
         name: 'Final Destination',
-        description: `Final Destination is a flat, medium sized stage, very similar to its Smash 64 counterpart but much larger. It features a single, octagonal solid platform, under which a black orb floats. While having no effect on gameplay, the background of the stage changes during matches; a full cycle lasts about 216 seconds.`,
+        description: 'Counter-pick stage with no platforms.',
         price: 60.40
       },
       {
@@ -32,7 +32,7 @@ module.exports = {
         lat: 6.84,
         lng: 7.52,
         name: 'Battlefield',
-        description: `Battlefield's main platform is flat, just like Final Destination, but not as long. Three smaller platforms are suspended in a pyramid pattern above the main platform. It shares cosmetic similarities to Final Destination in that the background is abstract and changes shape and color constantly.`,
+        description: 'Tri-platform starter stage.',
         price: 50.50
       },
       {
@@ -44,7 +44,7 @@ module.exports = {
         lat: 7.43,
         lng: 1.74,
         name: `Yoshi's Story`,
-        description: `Yoshi's Story is a very basic, neutral stage, with a layout similar in structure to Battlefield. The main platform is primarily flat then slightly slopes downwards at the edges to the left and right. The stage also features a small floating cloud, colloquially dubbed "Randall" (see below). Additionally, there are Shy Guys which fly around in groups of 1-6 in a line.`,
+        description: 'Tri-platform starter stage, features Randall the moving cloud.',
         price: 75.4
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
         lat: 10.07,
         lng: 4.53,
         name: 'Pokemon Stadium',
-        description: `The basic stage is symmetrical and consists of one large main platform, with two floating soft platforms above. After a varying period of time, the basic stage transforms into a random one of four variants, each based on a type from the Pokémon series.`,
+        description: "Starter stage with no top platform but two side platforms. Features transformations at some tournaments but remains frozen on Slippi.",
         price: 100
       },
       {
@@ -68,7 +68,7 @@ module.exports = {
         lat: 9.44,
         lng: 7.45,
         name: 'Dreamland',
-        description: 'The stage features three static floating platforms above a main one with Whispy Woods, a recurring boss in the Kirby series in the middle of the stage, facing left.',
+        description: 'Tri-platform starter stage with Whispy who occasionally blows wind affecting both players.',
         price: 64
       }
     ], { validate: true })

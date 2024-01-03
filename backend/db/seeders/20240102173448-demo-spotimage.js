@@ -14,12 +14,12 @@ module.exports = {
       {
         spotId: 1,
         url: 'https://www.ssbwiki.com/images/0/03/Final_Destination_Melee.png',
-        preview: false
+        preview: true
       },
       {
         spotId: 2,
         url: 'https://www.ssbwiki.com/images/d/de/Battlefieldssbm.jpg',
-        preview: false
+        preview: true
       },
       {
         spotId: 3,
