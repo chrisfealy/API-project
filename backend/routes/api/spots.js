@@ -288,6 +288,7 @@ router.get('/:spotId', async (req, res) => {
             },
             {
                 model: User,
+                attributes: ['id', 'firstName', 'lastName'],
                 as: 'Owner'
             }
         ]
@@ -439,7 +440,11 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         preview
     })
 
-    res.json(newSpotImage)
+    res.json({
+        id: newSpotImage.id,
+        url: newSpotImage.url,
+        preview: newSpotImage.preview
+    })
 })
 
 // Create a Spot

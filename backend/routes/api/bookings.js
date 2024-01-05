@@ -72,6 +72,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             [Op.or]: [
                 { startDate: { [Op.between]: [startDate, endDate] } },
                 { endDate: { [Op.between]: [startDate, endDate] } },
+                { [Op.and]: {
+                    startDate: { [Op.lte]: startDate },
+                    endDate: { [Op.gte]: endDate }
+                }}
             ]
         }
     })
