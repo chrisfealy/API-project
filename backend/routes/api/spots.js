@@ -360,33 +360,33 @@ router.get('/', validateQuery, async (req, res) => {
     if(!size) size = 20
     page = page || 1
 
-    const where = {}
-    const query = {
+    const queryObj = { where: {} }
+    const pagination = {
         limit: size,
-        offest: size * (page - 1)
+        offset: size * (page - 1)
     }
 
     if(minLat) {
-        where.lat = { [Op.gte]: minLat }
+        queryObj.where.lat = { [Op.gte]: minLat }
     }
     if(maxLat) {
-        where.lat = { ...where.lat, [Op.lte]: maxLat }
+        queryObj.where.lat = { ...queryObj.where.lat, [Op.lte]: maxLat }
     }
     if(minLng) {
-        where.lng = { [Op.gte]: minLng }
+        queryObj.where.lng = { [Op.gte]: minLng }
     }
     if(maxLng) {
-        where.lng = { ...where.lng, [Op.lte]: maxLng }
+        queryObj.where.lng = { ...queryObj.where.lng, [Op.lte]: maxLng }
     }
     if(minPrice) {
-        where.price = { [Op.gte]: minPrice }
+        queryObj.where.price = { [Op.gte]: minPrice }
     }
     if(maxPrice) {
-        where.price = { ...where.price, [Op.lte]: maxPrice }
+        queryObj.where.price = { ...queryObj.where.price, [Op.lte]: maxPrice }
     }
 
 
-    const spots = await Spot.findAll({where, ...query})
+    const spots = await Spot.findAll({...queryObj, ...pagination})
 
     for (const spot of spots) {
         const reviewCount = await Review.count({
