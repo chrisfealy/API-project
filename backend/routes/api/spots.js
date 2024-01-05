@@ -2,7 +2,8 @@ const express = require('express')
 const { requireAuth } = require('../../utils/auth')
 const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models')
 const router = express.Router()
-const { check } = require('express-validator')
+const { Op } = require("sequelize")
+const { check, query } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 
 const validateSpots = [
@@ -56,6 +57,42 @@ const validateReviews = [
         .notEmpty()
         .isInt({ min: 1, max: 5 })
         .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
+
+const validateQuery = [
+    query('page')
+        .optional()
+        .isInt({ min: 1, max: 10 })
+        .withMessage('Page must be greater than or equal to 1'),
+    query('size')
+        .optional()
+        .isInt({ min: 1, max: 20 })
+        .withMessage('Size must be greater than or equal to 1'),
+    query('maxLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Maximum latitude is invalid'),
+    query('minLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Minimum latitude is invalid'),
+    query('maxLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Maximum longitude is invalid'),
+    query('minLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Minimum longitude is invalid'),
+    query('minPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    query('maxPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage('Maximum price must be greater than or equal to 0'),
     handleValidationErrors
 ]
 
@@ -317,8 +354,39 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 })
 
 // Get all Spots
-router.get('/', async (req, res) => {
-    const spots = await Spot.findAll()
+router.get('/', validateQuery, async (req, res) => {
+    let { size, page, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+    if(!size) size = 20
+    page = page || 1
+
+    const where = {}
+    const query = {
+        limit: size,
+        offest: size * (page - 1)
+    }
+
+    if(minLat) {
+        where.lat = { [Op.gte]: minLat }
+    }
+    if(maxLat) {
+        where.lat = { ...where.lat, [Op.lte]: maxLat }
+    }
+    if(minLng) {
+        where.lng = { [Op.gte]: minLng }
+    }
+    if(maxLng) {
+        where.lng = { ...where.lng, [Op.lte]: maxLng }
+    }
+    if(minPrice) {
+        where.price = { [Op.gte]: minPrice }
+    }
+    if(maxPrice) {
+        where.price = { ...where.price, [Op.lte]: maxPrice }
+    }
+
+
+    const spots = await Spot.findAll({where, ...query})
 
     for (const spot of spots) {
         const reviewCount = await Review.count({
@@ -344,7 +412,11 @@ router.get('/', async (req, res) => {
         }
     }
 
-    res.json({ Spots: spots })
+    res.json({
+        Spots: spots,
+        page,
+        size
+    })
 })
 
 // Add an Image to a Spot based on the Spot's id
