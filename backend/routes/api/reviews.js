@@ -2,6 +2,20 @@ const express = require('express')
 const { requireAuth } = require('../../utils/auth')
 const { Review, ReviewImage, Spot } = require('../../db/models')
 const router = express.Router()
+const { handleValidationErrors } = require('../../utils/validation')
+
+const validateReviews = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
 
 // Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res) => {
@@ -15,111 +29,66 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
-    try {
-        const userId = req.user.id
-        const review = await Review.findByPk(req.params.reviewId, {
-            include: ReviewImage
-        })
+    const userId = req.user.id
+    const review = await Review.findByPk(req.params.reviewId, {
+        include: ReviewImage
+    })
 
-        if(!review) {
-            const error = new Error("Review couldn't be found")
-            error.statusCode = 404
-            throw error
-        }
-        if(userId !== review.userId) {
-            const error = new Error('Review must belong to the current user')
-            error.statusCode = 400
-            throw error
-        }
-
-        const reviewImages = review.ReviewImages
-
-        if(reviewImages.length >= 10) {
-            const error = new Error('Maximum number of images for this resource was reached')
-            error.statusCode = 403
-            throw error
-        }
-
-        const url = req.body.url
-        const newReviewImage = await review.createReviewImage({
-            url
-        })
-
-        res.json({
-            id: newReviewImage.id,
-            url: newReviewImage.url
-        })
+    if (!review) {
+        return res.status(404).json({ message: "Review couldn't be found" })
     }
-    catch (error) {
-        res.status(error.statusCode)
-        res.json({ message: error.message })
+    if (userId !== review.userId) {
+        return res.status(403).json({ message: "Review must belong to the current user" })
     }
+
+    const reviewImages = review.ReviewImages
+
+    if (reviewImages.length > 10) {
+        return res.status(403).json({ message: "Maximum number of images for this resource was reached" })
+    }
+
+    const url = req.body.url
+    const newReviewImage = await review.createReviewImage({ url })
+
+    res.json({
+        id: newReviewImage.id,
+        url: newReviewImage.url
+    })
 })
 
-router.put('/:reviewId', requireAuth, async (req, res) => {
-    try {
-        const userId = req.user.id
-        const editReview = await Review.findByPk(req.params.reviewId)
+router.put('/:reviewId', requireAuth, validateReviews, async (req, res) => {
+    const userId = req.user.id
+    const editReview = await Review.findByPk(req.params.reviewId)
 
-        if(!editReview) {
-            const error = new Error("Review couldn't be found")
-            error.statusCode = 404
-            throw error
-        }
-        if(userId !== editReview.userId) {
-            const error = new Error('Review must belong to the current user')
-            error.statusCode = 400
-            throw error
-        }
-
-        const { review, stars } = req.body
-
-        editReview.review = review || editReview.review
-        editReview.stars = stars || editReview.stars
-
-        await editReview.save()
-        res.json(editReview)
+    if (!editReview) {
+        return res.status(404).json({ message: "Review couldn't be found" })
     }
-    catch (error) {
-        if(error.name === 'SequelizeValidationError') {
-            res.status(400)
-            res.json({
-                message: 'Bad Request',
-                errors: {
-                    review: 'Review text is required',
-                    stars: 'Stars must be an integer from 1 to 5'
-                }
-            })
-        }
-        else {
-            res.status(error.statusCode)
-            res.json({ message: error.message })
-        }
+    if (userId !== editReview.userId) {
+        return res.status(403).json({ message: "Review must belong to the current user" })
     }
+
+    const { review, stars } = req.body
+
+    editReview.review = review || editReview.review
+    editReview.stars = stars || editReview.stars
+
+    await editReview.save()
+    res.json(editReview)
 })
 
 router.delete('/:reviewId', requireAuth, async (req, res) => {
-    try {
-        const userId = req.user.id
-        const review = await Review.findByPk(req.params.reviewId)
+    const userId = req.user.id
+    const review = await Review.findByPk(req.params.reviewId)
 
-        if(!review) {
-            const error = new Error("Review couldn't be found")
-            error.statusCode = 404
-            throw error
-        }
-        if(userId !== review.userId) {
-            const error = new Error('Review must belong to the current user')
-            error.statusCode = 400
-            throw error
-        }
-        await review.destroy()
-        res.json({ message: 'Successfully deleted' })
+    if (!review) {
+        return res.status(404).json({ message: "Review couldn't be found" })
     }
-    catch (error) {
-        res.status(error.statusCode)
-        res.json({ message: error.message })
+    if (userId !== review.userId) {
+        return res.status(403).json({ message: "Review must belong to the current user" })
     }
+
+    await review.destroy()
+    res.json({ message: "Successfully deleted" })
 })
 
 module.exports = router
