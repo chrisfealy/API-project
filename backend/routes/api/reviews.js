@@ -1,6 +1,6 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth')
-const { User, Review, ReviewImage, Spot } = require('../../db/models')
+const { Review, ReviewImage, Spot } = require('../../db/models')
 const router = express.Router()
 
 // Get all Reviews of the Current User
