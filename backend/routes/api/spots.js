@@ -228,26 +228,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         })
     }
 
-    // const bookings = spot.Bookings
-    // for (const booking of bookings) {
-    //     if (Date.parse(startDate) >= Date.parse(booking.startDate) && Date.parse(startDate) <= Date.parse(booking.endDate)) {
-    //         return res.status(403).json({
-    //             message: "Sorry, this spot is already booked for the specified dates",
-    //             errors: {
-    //                 startDate: "Start date conflicts with an existing booking"
-    //             }
-    //         })
-    //     }
-    //     if (Date.parse(endDate) >= Date.parse(booking.startDate) && Date.parse(endDate) <= Date.parse(booking.endDate)) {
-    //         return res.status(403).json({
-    //             message: "Sorry, this spot is already booked for the specified dates",
-    //             errors: {
-    //                 endDate: "End date conflicts with an existing booking"
-    //             }
-    //         })
-    //     }
-    // }
-
     const newBooking = await spot.createBooking({
         userId,
         startDate,
@@ -426,6 +406,10 @@ router.get('/', validateQuery, async (req, res) => {
     const spots = await Spot.findAll({...queryObj, ...pagination})
 
     for (const spot of spots) {
+        spot.lat = parseFloat(spot.lat)
+        spot.lng = parseFloat(spot.lng)
+        spot.price = parseFloat(spot.price)
+
         const reviewCount = await Review.count({
             where: { spotId: spot.id }
         })
