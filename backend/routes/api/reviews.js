@@ -1,6 +1,6 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth')
-const { Review, ReviewImage, Spot } = require('../../db/models')
+const { User, Review, ReviewImage, Spot } = require('../../db/models')
 const router = express.Router()
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
@@ -23,7 +23,27 @@ router.get('/current', requireAuth, async (req, res) => {
     const userId = req.user.id
     const reviews = await Review.findAll({
         where: { userId: userId },
-        include: [Spot, ReviewImage]
+        // include: [Spot, ReviewImage]
+        include: [
+            {
+                model: User,
+                attributes: {
+                    exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
+                }
+            },
+            {
+                model: Spot,
+                attributes: {
+                    exclude: ['description', 'createdAt', 'updatedAt']
+                }
+            },
+            {
+                model: ReviewImage,
+                attributes: {
+                    exclude: ['reviewId', 'updatedAt', 'createdAt']
+                }
+            }
+        ]
     })
     res.json({ Reviews: reviews })
 })

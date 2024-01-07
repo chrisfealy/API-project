@@ -177,40 +177,76 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
     if (Date.parse(startDate) < Date.now()) {
         return res.status(400).json({
-            message: 'Bad Request',
+            message: "Bad Request",
             errors: {
-                startDate: 'startDate cannot be in the past'
+                startDate: "startDate cannot be in the past"
             }
         })
     }
     if (Date.parse(startDate) >= Date.parse(endDate)) {
         return res.status(400).json({
-            message: 'Bad Request',
+            message: "Bad Request",
             errors: {
-                endDate: 'endDate cannot be on or before startDate'
+                endDate: "endDate cannot be on or before startDate"
             }
         })
     }
 
-    const bookings = spot.Bookings
-    for (const booking of bookings) {
-        if (Date.parse(startDate) >= Date.parse(booking.startDate) && Date.parse(startDate) <= Date.parse(booking.endDate)) {
-            return res.status(403).json({
-                message: "Sorry, this spot is already booked for the specified dates",
-                errors: {
-                    startDate: "Start date conflicts with an existing booking"
+    const bookingConflict = await Booking.findOne({
+        where: {
+            spotId: spot.id,
+            [Op.or]: [
+                {
+                    [Op.and]: [
+                        { startDate: { [Op.gte]: new Date(startDate) } },
+                        { startDate: { [Op.lte]: new Date(endDate) } }
+                    ]
+                },
+                {
+                    [Op.and]: [
+                        { endDate: { [Op.gte]: new Date(startDate) } },
+                        { endDate: { [Op.lte]: new Date(endDate) } }
+                    ]
+                },
+                {
+                    [Op.and]: [
+                        { startDate: { [Op.lte]: new Date(startDate) } },
+                        { endDate: { [Op.gte]: new Date(endDate) } }
+                    ]
                 }
-            })
+            ]
         }
-        if (Date.parse(endDate) >= Date.parse(booking.startDate) && Date.parse(endDate) <= Date.parse(booking.endDate)) {
-            return res.status(403).json({
-                message: "Sorry, this spot is already booked for the specified dates",
-                errors: {
-                    endDate: "End date conflicts with an existing booking"
-                }
-            })
-        }
+    })
+
+    if (bookingConflict) {
+        return res.status(403).json({
+            message: "Sorry, this spot is already booked for the specified dates",
+            errors: {
+                startDate: "Start date conflicts with an existing booking",
+                endDate: "End date conflicts with an existing booking"
+            }
+        })
     }
+
+    // const bookings = spot.Bookings
+    // for (const booking of bookings) {
+    //     if (Date.parse(startDate) >= Date.parse(booking.startDate) && Date.parse(startDate) <= Date.parse(booking.endDate)) {
+    //         return res.status(403).json({
+    //             message: "Sorry, this spot is already booked for the specified dates",
+    //             errors: {
+    //                 startDate: "Start date conflicts with an existing booking"
+    //             }
+    //         })
+    //     }
+    //     if (Date.parse(endDate) >= Date.parse(booking.startDate) && Date.parse(endDate) <= Date.parse(booking.endDate)) {
+    //         return res.status(403).json({
+    //             message: "Sorry, this spot is already booked for the specified dates",
+    //             errors: {
+    //                 endDate: "End date conflicts with an existing booking"
+    //             }
+    //         })
+    //     }
+    // }
 
     const newBooking = await spot.createBooking({
         userId,
@@ -430,7 +466,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     if (userId !== spot.ownerId) {
-        return res.status(404).json({ message: "Spot must belong to the current user" })
+        return res.status(403).json({ message: "Spot must belong to the current user" })
     }
 
     const { url, preview } = req.body

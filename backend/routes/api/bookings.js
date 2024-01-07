@@ -56,7 +56,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             }
         })
     }
-    if (Date.parse(startDate) > Date.parse(endDate)) {
+    if (Date.parse(startDate) >= Date.parse(endDate)) {
         return res.status(400).json({
             message: "Bad Request",
             errors: {
@@ -70,12 +70,24 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             id: { [Op.ne]: booking.id },
             spotId: booking.spotId,
             [Op.or]: [
-                { startDate: { [Op.between]: [startDate, endDate] } },
-                { endDate: { [Op.between]: [startDate, endDate] } },
-                { [Op.and]: {
-                    startDate: { [Op.lte]: startDate },
-                    endDate: { [Op.gte]: endDate }
-                }}
+                {
+                    [Op.and]: [
+                        { startDate: { [Op.gte]: new Date(startDate) } },
+                        { startDate: { [Op.lte]: new Date(endDate) } }
+                    ]
+                },
+                {
+                    [Op.and]: [
+                        { endDate: { [Op.gte]: new Date(startDate) } },
+                        { endDate: { [Op.lte]: new Date(endDate) } }
+                    ]
+                },
+                {
+                    [Op.and]: [
+                        { startDate: { [Op.lte]: new Date(startDate) } },
+                        { endDate: { [Op.gte]: new Date(endDate) } }
+                    ]
+                }
             ]
         }
     })
