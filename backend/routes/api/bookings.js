@@ -40,7 +40,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         return res.status(404).json({ message: "Booking couldn't be found" })
     }
     if (userId !== booking.userId) {
-        return res.status(403).json({ message: "Booking must belong to the current user" })
+        return res.status(403).json({ message: "Forbidden" })
     }
     if (Date.parse(booking.endDate) < Date.now()) {
         return res.status(403).json({ message: "Past bookings can't be modified" })

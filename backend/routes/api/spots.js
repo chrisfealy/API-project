@@ -170,7 +170,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     if (userId === spot.ownerId) {
-        return res.status(403).json({ message: "Spot must NOT belong to the current user" })
+        return res.status(403).json({ message: "Forbidden" })
     }
 
     const { startDate, endDate } = req.body
@@ -336,7 +336,7 @@ router.put('/:spotId', requireAuth, validateSpots, async (req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     if (userId !== spot.ownerId) {
-        return res.status(403).json({ message: "Spot must belong to the current user" })
+        return res.status(403).json({ message: "Forbidden" })
     }
 
     const { address, city, state, country, lat, lng, name, description, price } = req.body
@@ -363,7 +363,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     if (userId !== spot.ownerId) {
-        return res.status(403).json({ message: "Spot must belong to the current user" })
+        return res.status(403).json({ message: "Forbidden" })
     }
 
     await spot.destroy()
@@ -450,7 +450,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     if (userId !== spot.ownerId) {
-        return res.status(403).json({ message: "Spot must belong to the current user" })
+        return res.status(403).json({ message: "Forbidden" })
     }
 
     const { url, preview } = req.body
