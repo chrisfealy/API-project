@@ -37,6 +37,16 @@ export const fetchSpots = () => async (dispatch) => {
     }
 }
 
+export const fetchSpot = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+
+    if(response.ok) {
+        const spot = await response.json()
+        dispatch(receiveSpot(spot))
+        return spot
+    }
+}
+
 const spotsReducer = (state = {}, action) => {
     switch(action.type) {
         case LOAD_SPOTS: {
@@ -45,7 +55,9 @@ const spotsReducer = (state = {}, action) => {
               spotsState[spot.id] = spot;
             });
             return spotsState;
-          }
+        }
+        case RECEIVE_SPOT:
+            return { ...state, [action.spot.id]: action.spot }
         default:
             return state
     }
