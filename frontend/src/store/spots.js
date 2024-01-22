@@ -87,8 +87,8 @@ export const updateSpot = (spot) => async (dispatch) => {
     }
 }
 
-export const deleteReport = (spotId) => async (dispatch) => {
-    const response = await fetch(`/api/reports/${spotId}`, {
+export const deleteSpot = (spotId) => async (dispatch) => {
+    const response = await fetch(`/api/spots/${spotId}`, {
       method: 'DELETE'
     })
 
