@@ -47,17 +47,74 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     }
 }
 
+export const createSpot = (spot) => async (dispatch) => {
+    const response = await fetch('/api/spots', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(spot)
+    })
+
+    if(response.ok) {
+      const spot = await response.json()
+      dispatch(receiveSpot(spot))
+      return spot
+    }
+    else {
+      const error = await response.json()
+      return error
+    }
+}
+
+export const updateSpot = (spot) => async (dispatch) => {
+    const response = await fetch(`/api/spots/${spot.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(spot)
+    })
+
+    if(response.ok) {
+      const spot = await response.json()
+      dispatch(editSpot(spot))
+      return spot
+    }
+    else {
+      const error = await response.json()
+      return error
+    }
+}
+
+export const deleteReport = (spotId) => async (dispatch) => {
+    const response = await fetch(`/api/reports/${spotId}`, {
+      method: 'DELETE'
+    })
+
+    if(response.ok) {
+      dispatch(removeSpot(spotId))
+    }
+}
+
 const spotsReducer = (state = {}, action) => {
     switch(action.type) {
         case LOAD_SPOTS: {
             const spotsState = {};
             action.spots.Spots.forEach((spot) => {
-              spotsState[spot.id] = spot;
-            });
-            return spotsState;
+              spotsState[spot.id] = spot
+            })
+            return spotsState
         }
         case RECEIVE_SPOT:
             return { ...state, [action.spot.id]: action.spot }
+        case UPDATE_SPOT:
+            return { ...state, [action.spot.id]: action.spot }
+        case REMOVE_SPOT: {
+            const newState = { ...state }
+            delete newState[action.spotId]
+            return newState
+        }
         default:
             return state
     }
