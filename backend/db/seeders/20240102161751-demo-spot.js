@@ -14,8 +14,8 @@ module.exports = {
       {
         ownerId: 13,
         address: "1 Royal Lane",
-        city: "Mushroom Kingdoom",
-        state: "Mushroom Kingdoom",
+        city: "Mushroom Kingdom",
+        state: "Mushroom Kingdom",
         country: "Mario Universe",
         lat: -34.9630823,
         lng: 99.4821467,
@@ -27,7 +27,7 @@ module.exports = {
         ownerId: 1,
         address: "7 Skyport Plaza",
         city: "Cloud Kingdom",
-        state: "Mushroom Kingdoom",
+        state: "Mushroom Kingdom",
         country: "Mario Universe",
         lat: 48.9914043,
         lng: -21.0030998,
@@ -39,11 +39,11 @@ module.exports = {
         ownerId: 1,
         address: "23 Toadstool Street",
         city: "Fungi District",
-        state: "Mushroom Kingdoom",
+        state: "Mushroom Kingdom",
         country: "Mario Universe",
         lat: 66.2482936,
         lng: -150.4623994,
-        name: "Mushroom Kingdoom",
+        name: "Mushroom Kingdom",
         description: "Mushroom Kingdom (いにしえの王国, Ancient Kingdom) is a starter stage in Super Smash Bros. Melee. It is Luigi and Dr. Mario's home stage. In All-Star mode, this stage is played on when Luigi and any of his teammates are faced.",
         price: 108.94
       },
@@ -366,7 +366,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ["Princess Peach's Castle", "Rainbow Cruise", "Mushroom Kingdoom", "Yoshi's Story", "Yoshi's Island", "Kongo Falls", "Jungle Japes", "Great Bay", "Temple", "Brinstar", "Fountain of Dreams", "Green Greens", "Corneria", "Venom", "Pokémon Stadium", "Mute City", "Onett", "Icicle Mountain", "Mushroom Kingdom II", "Super Happy Tree", "Kongo Jungle", "Brinstar Depths", "Dream Land", "Poke Floats", "Big Blue", "Fourside", "Flat Zone", "Battlefield", "Final Destination"] }
+      name: { [Op.in]: ["Princess Peach's Castle", "Rainbow Cruise", "Mushroom Kingdom", "Yoshi's Story", "Yoshi's Island", "Kongo Falls", "Jungle Japes", "Great Bay", "Temple", "Brinstar", "Fountain of Dreams", "Green Greens", "Corneria", "Venom", "Pokémon Stadium", "Mute City", "Onett", "Icicle Mountain", "Mushroom Kingdom II", "Super Happy Tree", "Kongo Jungle", "Brinstar Depths", "Dream Land", "Poke Floats", "Big Blue", "Fourside", "Flat Zone", "Battlefield", "Final Destination"] }
     }, {});
   }
 };
