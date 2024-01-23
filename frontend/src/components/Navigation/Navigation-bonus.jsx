@@ -9,8 +9,13 @@ function Navigation({ isLoaded }) {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">dairbnb</NavLink>
       </li>
+      {sessionUser && (
+        <li>
+          <NavLink to="/spots/new">Create a New Spot</NavLink>
+        </li>
+      )}
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />

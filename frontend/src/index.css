@@ -1,1 +1,10 @@
 /* TODO: Add sitewide styles */
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap');
+
+* {
+    font-family: 'Maven Pro', sans-serif;
+}
+
+textarea {
+    resize: none;
+}

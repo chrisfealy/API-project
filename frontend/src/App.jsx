@@ -5,6 +5,10 @@ import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
+import LandingPage from './components/LandingPage';
+import SpotDetails from './components/SpotDetails/SpotDetails';
+import SpotForm from './components/SpotForm';
+import ManageSpots from './components/ManageSpots';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -30,8 +34,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <LandingPage />
       },
+      {
+        path: '/spots/new',
+        element: <SpotForm />
+      },
+      {
+        path: '/spots/current',
+        element: <ManageSpots />
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotDetails />
+      },
+      {
+        path: '/spots/:spotId/edit',
+        element: <h2>Edit</h2>
+      }
+
       // {
       //   path: 'login',
       //   element: <LoginFormPage />
