@@ -444,10 +444,10 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
 // Create a Spot
 router.post('/', requireAuth, validateSpots, async (req, res) => {
-    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    const { ownerId, address, city, state, country, lat, lng, name, description, price } = req.body
 
     const newSpot = await Spot.create({
-        ownerId: req.user.id,
+        ownerId: ownerId || req.user.id,
         address,
         city,
         state,
