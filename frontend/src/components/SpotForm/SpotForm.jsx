@@ -1,71 +1,102 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { createSpot } from "../../store/spots"
-import { useDispatch, useSelector } from "react-redux"
+import { addImages, createSpot } from "../../store/spots"
+import { useDispatch } from "react-redux"
 import './SpotForm.css'
 
 function SpotForm() {
-    const sessionUser = useSelector(state => state.session.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [country, setCountry] = useState('')
     const [address, setAddress] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-    const [lat, setLat] = useState()
-    const [lng, setLng] = useState()
-    const [desc, setDesc] = useState('')
-    const [title, setTitle] = useState('')
-    const [price, setPrice] = useState()
-    const [prevImgURL, setPrevImgURL] = useState('')
+    const [lat, setLat] = useState('')
+    const [lng, setLng] = useState('')
+    const [description, setDescription] = useState('')
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState('')
+    const [prevImg, setPrevImg] = useState('')
+    const [img1, setImg1] = useState('')
+    const [img2, setImg2] = useState('')
+    const [img3, setImg3] = useState('')
+    const [img4, setImg4] = useState('')
     const [validationErrors, setValidationErrors] = useState({})
+    const [submitted, setSubmitted] = useState(false)
 
     useEffect(() => {
         const errors = {}
-        if(!country.length) errors.country = 'Country is required'
-        if(!address.length) errors.address = 'Address is required'
-        if(!city.length) errors.city = 'City is required'
-        if(!state.length) errors.state = 'State is required'
-        if(!lat) errors.lat = 'Latitude is required'
-        if(!lng) errors.lng = 'Longitude is required'
-        if(desc.length < 30) errors.desc = 'Description needs a minimum of 30 characters'
-        if(!title.length) errors.title = 'Name is required'
-        if(!price) errors.price = 'Price is required'
-        if(!prevImgURL) errors.prevImgURL = 'Preview image is required'
+        if (!country.length) errors.country = 'Country is required'
+        if (!address.length) errors.address = 'Address is required'
+        if (!city.length) errors.city = 'City is required'
+        if (!state.length) errors.state = 'State is required'
+        if (!lat) errors.lat = 'Latitude is required'
+        if (!lng) errors.lng = 'Longitude is required'
+        if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
+        if (!name.length) errors.name = 'Name is required'
+        if (!price) errors.price = 'Price is required'
+        if (!prevImg) errors.prevImg = 'Preview image is required'
+        if (prevImg && !validImage(prevImg)) errors.prevImg = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img1 && !validImage(img1)) errors.img1 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img2 && !validImage(img2)) errors.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img3 && !validImage(img3)) errors.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img4 && !validImage(img4)) errors.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
         setValidationErrors(errors)
-    }, [country, address, city, state, lat, lng, desc, title, price, prevImgURL])
+    }, [country, address, city, state, lat, lng, description, name, price, prevImg, img1, img2, img3, img4])
 
-    const onSubmit = async e => {
+    const validImage = img => {
+        if (img.endsWith('.png')) return true
+        if (img.endsWith('.jpg')) return true
+        if (img.endsWith('.jpeg')) return true
+        return false
+    }
+
+    const handleSubmit = async e => {
         e.preventDefault()
-        setValidationErrors({})
-        const newSpot = await dispatch(createSpot({
-            ownerId: sessionUser.id,
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name: title,
-            description: desc,
-            price
-        }))
-        console.log('NEW SPOT!!!', newSpot)
-        if(newSpot.errors) setValidationErrors(newSpot.errors)
-        else navigate(`/spots/${newSpot.id}`)
+        setSubmitted(true)
+        const images = [prevImg, img1, img2, img3, img4].filter(img => img)
+        if (!Object.keys(validationErrors).length) {
+            return dispatch(createSpot({
+                address,
+                city,
+                state,
+                country,
+                lat,
+                lng,
+                name,
+                description,
+                price
+            }))
+                .then(spot => {
+                    dispatch(addImages(spot.id, images))
+                    return spot
+                })
+                .then(spot => {
+                    console.log('SECOND THEN', spot)
+                    navigate(`/spots/${spot.id}`)
+                })
+                .catch(async (err) => {
+                    if(err.response) {
+                        const data = await res.json()
+                        if (data.errors) {
+                            setValidationErrors({...data.errors, ...validationErrors})
+                        }
+                    }
+                })
+        }
     }
 
     return (
         <div>
             <h2>Create a new Spot</h2>
-            <h3>Where's your place located?</h3>
+            <h3>Where&apos;s your place located?</h3>
             <p>Guests will only get your exact address once they booked a reservation.</p>
 
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label>
                     Country
                     <div className="errors">
-                        {validationErrors.country && `${validationErrors.country}`}
+                        {submitted && validationErrors.country && `${validationErrors.country}`}
                     </div>
                     <input
                         type="text"
@@ -78,7 +109,7 @@ function SpotForm() {
                 <label>
                     Street Address
                     <div className="errors">
-                        {validationErrors.address && `${validationErrors.address}`}
+                        {submitted && validationErrors.address && `${validationErrors.address}`}
                     </div>
                     <input
                         type="text"
@@ -91,7 +122,7 @@ function SpotForm() {
                 <label>
                     City
                     <div className="errors">
-                        {validationErrors.city && `${validationErrors.city}`}
+                        {submitted && validationErrors.city && `${validationErrors.city}`}
                     </div>
                     <input
                         type="text"
@@ -104,7 +135,7 @@ function SpotForm() {
                 <label>
                     State
                     <div className="errors">
-                        {validationErrors.state && `${validationErrors.state}`}
+                        {submitted && validationErrors.state && `${validationErrors.state}`}
                     </div>
                     <input
                         type="text"
@@ -117,7 +148,7 @@ function SpotForm() {
                 <label>
                     Latitude
                     <div className="errors">
-                        {validationErrors.lat && `${validationErrors.lat}`}
+                        {submitted && validationErrors.lat && `${validationErrors.lat}`}
                     </div>
                     <input
                         type="text"
@@ -130,7 +161,7 @@ function SpotForm() {
                 <label>
                     Longitude
                     <div className="errors">
-                        {validationErrors.lng && `${validationErrors.lng}`}
+                        {submitted && validationErrors.lng && `${validationErrors.lng}`}
                     </div>
                     <input
                         type="text"
@@ -144,24 +175,24 @@ function SpotForm() {
                 <label>
                     <textarea
                         placeholder="Description"
-                        value={desc}
-                        onChange={e => setDesc(e.target.value)}
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
                     />
                     <div className="errors">
-                        {validationErrors.desc && `${validationErrors.desc}`}
+                        {submitted && validationErrors.description && `${validationErrors.description}`}
                     </div>
                 </label>
                 <h3>Create a title for your spot</h3>
-                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
                 <label>
                     <input
                         type="text"
                         placeholder="Name of your spot"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                     />
                     <div className="errors">
-                        {validationErrors.title && `${validationErrors.title}`}
+                        {submitted && validationErrors.name && `${validationErrors.name}`}
                     </div>
                 </label>
                 <h3>Set a base price for your spot</h3>
@@ -175,7 +206,7 @@ function SpotForm() {
                         onChange={e => setPrice(e.target.value)}
                     />
                     <div className="errors">
-                        {validationErrors.price && `${validationErrors.price}`}
+                        {submitted && validationErrors.price && `${validationErrors.price}`}
                     </div>
                 </label>
                 <h3>Liven up your spot with photos</h3>
@@ -184,41 +215,60 @@ function SpotForm() {
                     <input
                         type="text"
                         placeholder="Preview Image URL"
-                        value={prevImgURL}
-                        onChange={e => setPrevImgURL(e.target.value)}
+                        value={prevImg}
+                        onChange={e => setPrevImg(e.target.value)}
                     />
                     <div className="errors">
-                        {validationErrors.prevImgURL && `${validationErrors.prevImgURL}`}
+                        {submitted && validationErrors.prevImg && `${validationErrors.prevImg}`}
                     </div>
                 </label>
                 <label>
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={img1}
+                        onChange={e => setImg1(e.target.value)}
                     />
+                    <div className="errors">
+                        {submitted && validationErrors.img1 && `${validationErrors.img1}`}
+                    </div>
                 </label>
                 <label>
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={img2}
+                        onChange={e => setImg2(e.target.value)}
                     />
+                    <div className="errors">
+                        {submitted && validationErrors.img2 && `${validationErrors.img2}`}
+                    </div>
                 </label>
                 <label>
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={img3}
+                        onChange={e => setImg3(e.target.value)}
                     />
+                    <div className="errors">
+                        {submitted && validationErrors.img3 && `${validationErrors.img3}`}
+                    </div>
                 </label>
                 <label>
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={img4}
+                        onChange={e => setImg4(e.target.value)}
                     />
+                    <div className="errors">
+                        {submitted && validationErrors.img4 && `${validationErrors.img4}`}
+                    </div>
                 </label>
                 <br />
                 <button
                     type="submit"
-                    disabled={Object.keys(validationErrors).length}
                 >
                     Create Spot
                 </button>
