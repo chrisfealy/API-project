@@ -77,7 +77,7 @@ function SpotForm() {
                 })
                 .catch(async (err) => {
                     if(err.response) {
-                        const data = await res.json()
+                        const data = await err.json()
                         if (data.errors) {
                             setValidationErrors({...data.errors, ...validationErrors})
                         }

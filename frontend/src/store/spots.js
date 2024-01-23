@@ -47,12 +47,20 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     }
 }
 
+export const fetchUserSpots = () => async (dispatch) => {
+  const response = await csrfFetch('/api/spots/current')
+
+  if(response.ok) {
+    const currentSpots = await response.json()
+    dispatch(loadSpots(currentSpots))
+    return currentSpots
+  }
+}
+
 export const createSpot = (spot) => async (dispatch) => {
     const response = await csrfFetch('/api/spots', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(spot)
     })
 
@@ -67,7 +75,7 @@ export const createSpot = (spot) => async (dispatch) => {
     }
 }
 
-export const addImages = (spotId, images) => async (dispatch) => {
+export const addImages = (spotId, images) => async () => {
   const imagesArr = []
   for(let i = 0; i < images.length; i++) {
     const body = {url: images[i]}
@@ -75,11 +83,10 @@ export const addImages = (spotId, images) => async (dispatch) => {
     else body.preview = false
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     })
+
     if(response.ok) {
       const image = response.json()
       imagesArr.push(image)
