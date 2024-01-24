@@ -6,7 +6,7 @@ function Spot({ spot }) {
             <Link to={`/spots/${spot.id}`}>
                 <img src={spot.previewImage} alt={spot.name} className="spot-card-image" />
             </Link>
-            <p>{spot.city}, {spot.state} <i className="fa-solid fa-star"></i>{spot.avgRating || `New`}</p>
+            <p>{spot.city}, {spot.state} <i className="fa-solid fa-star"/>{spot.avgRating || `New`}</p>
             <p>${spot.price} night</p>
         </div>
     )
