@@ -4,10 +4,13 @@ function Spot({ spot }) {
     return (
         <div className="spot-card">
             <Link to={`/spots/${spot.id}`}>
-                <img src={spot.previewImage} alt={spot.name} className="spot-card-image" />
-            </Link>
-            <p>{spot.city}, {spot.state} <i className="fa-solid fa-star"/>{spot.avgRating || `New`}</p>
+            <img src={spot.previewImage} alt={spot.name} className="spot-card-image" />
+            <div className="spot-info">
+                <p>{spot.city}, {spot.state}</p>
+                <p><i className="fa-solid fa-star"/>{(spot.avgRating && Number(spot.avgRating).toFixed(1)) || `New`}</p>
+            </div>
             <p>${spot.price} night</p>
+            </Link>
         </div>
     )
 }
