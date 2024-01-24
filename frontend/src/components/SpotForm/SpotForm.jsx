@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { addImages, createSpot } from "../../store/spots"
+import { addImages, createSpot, updateSpot } from "../../store/spots"
 import { useDispatch } from "react-redux"
 import './SpotForm.css'
 
-function SpotForm() {
+function SpotForm({ spot, formType }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [country, setCountry] = useState('')
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [lat, setLat] = useState('')
-    const [lng, setLng] = useState('')
-    const [description, setDescription] = useState('')
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState('')
+    const [country, setCountry] = useState(spot?.country)
+    const [address, setAddress] = useState(spot?.address)
+    const [city, setCity] = useState(spot?.city)
+    const [state, setState] = useState(spot?.state)
+    const [lat, setLat] = useState(spot?.lat)
+    const [lng, setLng] = useState(spot?.lng)
+    const [description, setDescription] = useState(spot?.description)
+    const [name, setName] = useState(spot?.name)
+    const [price, setPrice] = useState(spot?.price)
     const [prevImg, setPrevImg] = useState('')
     const [img1, setImg1] = useState('')
     const [img2, setImg2] = useState('')
@@ -35,7 +35,7 @@ function SpotForm() {
         if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
         if (!name.length) errors.name = 'Name is required'
         if (!price) errors.price = 'Price is required'
-        if (!prevImg) errors.prevImg = 'Preview image is required'
+        if (formType === 'Create' && !prevImg) errors.prevImg = 'Preview image is required'
         if (prevImg && !validImage(prevImg)) errors.prevImg = 'Image URL must end in .png, .jpg, or .jpeg'
         if (img1 && !validImage(img1)) errors.img1 = 'Image URL must end in .png, .jpg, or .jpeg'
         if (img2 && !validImage(img2)) errors.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
@@ -54,41 +54,47 @@ function SpotForm() {
     const handleSubmit = async e => {
         e.preventDefault()
         setSubmitted(true)
+        spot = { ...spot, address, city, state, country, lat, lng, name, description, price }
         const images = [prevImg, img1, img2, img3, img4].filter(img => img)
         if (!Object.keys(validationErrors).length) {
-            return dispatch(createSpot({
-                address,
-                city,
-                state,
-                country,
-                lat,
-                lng,
-                name,
-                description,
-                price
-            }))
-                .then(spot => {
-                    dispatch(addImages(spot.id, images))
-                    return spot
-                })
-                .then(spot => {
-                    console.log('SECOND THEN', spot)
-                    navigate(`/spots/${spot.id}`)
-                })
-                .catch(async (err) => {
-                    if(err.response) {
-                        const data = await err.json()
-                        if (data.errors) {
-                            setValidationErrors({...data.errors, ...validationErrors})
+            if (formType === 'Create') {
+                return dispatch(createSpot(spot))
+                    .then(spot => {
+                        dispatch(addImages(spot.id, images))
+                        return spot
+                    })
+                    .then(spot => {
+                        navigate(`/spots/${spot.id}`)
+                    })
+                    .catch(async (err) => {
+                        if (err.response) {
+                            const data = await err.json()
+                            if (data.errors) {
+                                setValidationErrors({ ...data.errors, ...validationErrors })
+                            }
                         }
-                    }
-                })
+                    })
+            }
+            if (formType === 'Update') {
+                return dispatch(updateSpot(spot))
+                    .then(spot => {
+                        navigate(`/spots/${spot.id}`)
+                    })
+                    .catch(async (err) => {
+                        if (err.response) {
+                            const data = await err.json()
+                            if (data.errors) {
+                                setValidationErrors({ ...data.errors, ...validationErrors })
+                            }
+                        }
+                    })
+            }
         }
     }
 
     return (
         <div>
-            <h2>Create a new Spot</h2>
+            <h2>{formType === 'Create' ? 'Create a new Spot' : 'Update your Spot'}</h2>
             <h3>Where&apos;s your place located?</h3>
             <p>Guests will only get your exact address once they booked a reservation.</p>
 
@@ -270,7 +276,7 @@ function SpotForm() {
                 <button
                     type="submit"
                 >
-                    Create Spot
+                    {formType} Spot
                 </button>
             </form>
         </div>

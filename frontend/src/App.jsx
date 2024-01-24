@@ -7,8 +7,9 @@ import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
 import LandingPage from './components/LandingPage';
 import SpotDetails from './components/SpotDetails/SpotDetails';
-import SpotForm from './components/SpotForm';
 import ManageSpots from './components/ManageSpots';
+import CreateSpot from './components/CreateSpot';
+import UpdateSpot from './components/UpdateSpot/UpdateSpot';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/spots/new',
-        element: <SpotForm />
+        element: <CreateSpot />
       },
       {
         path: '/spots/current',
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/spots/:spotId/edit',
-        element: <h2>Edit</h2>
+        element: <UpdateSpot />
       }
 
       // {
