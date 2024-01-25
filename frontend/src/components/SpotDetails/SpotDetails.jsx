@@ -5,6 +5,7 @@ import { fetchSpot } from "../../store/spots"
 import { fetchSpotReviews } from "../../store/reviews"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import './SpotDetails.css'
+import CreateReview from "../CreateReview"
 
 function SpotDetails() {
     const dispatch = useDispatch()
@@ -60,6 +61,7 @@ function SpotDetails() {
                         <p><i className="fa-solid fa-star" />New</p>
                         <OpenModalButton
                             buttonText='Post Your Review'
+                            modalComponent={<CreateReview />}
                         />
                     </div>
                 )}
