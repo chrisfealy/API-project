@@ -21,17 +21,15 @@ function SpotDetails() {
         dispatch(fetchSpotReviews(spotId))
     }, [dispatch, spotId])
 
-    console.log(reviews.length)
-
     return (
         <div className="spot-details-container">
             <div className="spot-header">
                 <h2>{spot?.name}</h2>
-                <h4>{spot?.city}, {spot?.state}, {spot?.country}</h4>
+                <p>{spot?.city}, {spot?.state}, {spot?.country}</p>
             </div>
             <div className="spot-img-container">
-                {images?.map(image => (
-                    <img src={image.url} alt={spot?.name} key={image.id} />
+                {images?.map((image, index) => (
+                    <img src={image.url} alt={spot?.name} key={image.id} className={`spot-img-${index}`} />
                 ))}
             </div>
             <div className="spot-details">
@@ -45,8 +43,8 @@ function SpotDetails() {
                         {spot?.numReviews === 0 && (
                             <p><i className="fa-solid fa-star"/>New</p>
                         )}
-                        {spot?.numReviews && (
-                            <div>
+                        {spot?.numReviews > 0 && (
+                            <div className="reserve-top-right">
                                 <p><i className="fa-solid fa-star"/> {Number(spot?.avgStarRating).toFixed(1)}</p>
                                 <p>{spot?.numReviews} {reviewStr}</p>
                             </div>

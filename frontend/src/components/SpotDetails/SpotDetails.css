@@ -1,9 +1,60 @@
+.spot-details-container {
+    margin: auto 3rem;
+}
+
+.spot-header h2 {
+    font-size: 24px;
+}
+
+.spot-header p {
+    font-size: 18px;
+}
+
 .spot-img-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+    "spot-img-0 spot-img-0 spot-img-1 spot-img-2"
+    "spot-img-0 spot-img-0 spot-img-3 spot-img-4";
+}
+
+.spot-img-container img {
+    height: 100%;
+    width: 100%;
+}
+
+.spot-img {
+    object-fit: fill;
+}
+
+.spot-img-0 {
+    grid-area: spot-img-0;
+}
+.spot-img-1 {
+    grid-area: spot-img-1;
+}
+.spot-img-2 {
+    grid-area: spot-img-2;
+}
+.spot-img-3 {
+    grid-area: spot-img-3;
+}
+.spot-img-4 {
+    grid-area: spot-img-4;
 }
 
 .spot-details {
+    margin-top: 20px;
     display: flex;
+}
+
+.spot-description h3 {
+    font-size: 24px;
+}
+
+.spot-description p {
+    font-size: 14px;
 }
 
 .reserve-container {
@@ -11,7 +62,7 @@
     flex-direction: column;
     border: solid black 2px;
     border-radius: 8px;
-    width: 25%;
+    width: 33%;
     padding: 20px;
 }
 
@@ -21,8 +72,14 @@
     justify-content: space-between;
 }
 
+.reserve-top-right {
+    display: flex;
+    gap: 1rem;
+}
+
 .reserve-btn {
     color: white;
     background-color: rgb(255, 79, 79);
     border: solid black 2px;
+    height: 50px;
 }
