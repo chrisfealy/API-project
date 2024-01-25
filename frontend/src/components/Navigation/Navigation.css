@@ -9,7 +9,7 @@
 .nav-container {
   display: flex;
   justify-content: space-between;
-  margin: auto 15px;
+  margin: auto 30px;
 }
 
 .nav-left {
@@ -26,4 +26,6 @@
 .nav-right {
   display: flex;
   align-items: center;
+  gap: 15px;
+  margin-right: 3rem;
 }
