@@ -3,8 +3,8 @@
 }
 
 .login-container {
-    height: 30vh;
-    width: 15vw;
+    height: 40vh;
+    width: 20vw;
     padding-left: 1vw;
     display: flex;
     flex-direction: column;
