@@ -10,7 +10,7 @@ function CreateReview({ spotId }) {
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
     const [activeRating, setActiveRating] = useState(0)
-    const [validationErrors, setValidationErrors] = useState({})
+    const [validationErrors] = useState({})
     const [submitted, setSubmitted] = useState(false)
 
     const handleRatingClick = (newRating) => {
