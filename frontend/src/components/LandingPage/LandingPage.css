@@ -3,11 +3,16 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-/* .spot-info {
+.spot-card {
+    display: flex;
+    justify-content: center;
+}
+
+.spot-info {
     display: flex;
     justify-content: space-between;
-} */
+}
 
 .spot-card-image {
-    width: 100%;
+    border-radius: 0.75rem;
 }
