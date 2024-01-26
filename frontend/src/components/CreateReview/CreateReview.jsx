@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createReview } from '../../store/reviews'
 import { useDispatch } from 'react-redux'
 import { useModal } from '../../context/Modal'
@@ -10,8 +10,15 @@ function CreateReview({ spotId }) {
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
     const [activeRating, setActiveRating] = useState(0)
-    const [validationErrors] = useState({})
+    const [validationErrors, setValidationErrors] = useState({})
     const [submitted, setSubmitted] = useState(false)
+
+    useEffect(() => {
+        const errors = {}
+        if(review.length < 10) errors.review = 'Review must be at least 10 characters'
+        if(rating < 1)
+        setValidationErrors(errors)
+    }, [review, rating])
 
     const handleRatingClick = (newRating) => {
         setRating(newRating)

@@ -26,7 +26,7 @@ function Reviews() {
                     <h3>{review?.User?.firstName}</h3>
                     <p>{getMonth(review)} {getYear(review)}</p>
                     <p>{review?.review} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae autem recusandae veniam suscipit consequatur corrupti cumque reiciendis, saepe in error nam modi reprehenderit quia cum velit nesciunt quaerat laudantium laborum nulla assumenda dicta explicabo veritatis iusto. Quo, animi autem? Quaerat minus ratione neque atque recusandae cumque dicta consectetur fugit nobis.</p>
-                    {(sessionUser.id === review.userId) && (
+                    {(sessionUser?.id === review.userId) && (
                         <OpenModalButton
                             modalComponent={<DeleteReview review={review}/>}
                             buttonText='Delete'
