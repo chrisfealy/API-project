@@ -14,6 +14,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    gap: 0.5rem;
     grid-template-areas:
     "spot-img-0 spot-img-0 spot-img-1 spot-img-2"
     "spot-img-0 spot-img-0 spot-img-3 spot-img-4";
@@ -30,18 +31,21 @@
 
 .spot-img-0 {
     grid-area: spot-img-0;
+    border-radius: .75rem 0 0 .75rem;
 }
 .spot-img-1 {
     grid-area: spot-img-1;
 }
 .spot-img-2 {
     grid-area: spot-img-2;
+    border-radius: 0 .75rem 0 0;
 }
 .spot-img-3 {
     grid-area: spot-img-3;
 }
 .spot-img-4 {
     grid-area: spot-img-4;
+    border-radius: 0 0 .75rem 0;
 }
 
 .spot-details {

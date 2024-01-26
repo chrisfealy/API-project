@@ -17,7 +17,7 @@ function SpotDetails() {
     const images = spot?.SpotImages
 
     let hasPosted = false
-    if(reviews.find(review => review.userId === sessionUser.id)) hasPosted = true
+    if(reviews?.find(review => review.userId === sessionUser?.id)) hasPosted = true
 
     const reserveBtn = e => {
         e.preventDefault()
@@ -98,7 +98,7 @@ function SpotDetails() {
                 {reviews.length ? (
                     <Reviews/>
                 ) : (
-                    <p>Be the first to post a review!</p>
+                    sessionUser?.id !== spot?.ownerId && (<p>Be the first to post a review!</p>)
                 )}
             </div>
         </div>
