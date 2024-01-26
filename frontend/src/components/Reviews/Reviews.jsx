@@ -4,7 +4,7 @@ import DeleteReview from "../DeleteReview"
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-function Reviews({ spot }) {
+function Reviews() {
     const sessionUser = useSelector(state => state.session.user)
     const spotReviews = useSelector(state => Object.values(state.reviews))
     const reviews = [...spotReviews].reverse()

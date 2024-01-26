@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf"
-import { removeSpot } from "./spots"
 
 export const GET_SPOT_REVIEWS = 'reviews/GET_SPOT_REVIEWS'
 export const POST_REVIEW = '/reviews/POST_REVIEW'

@@ -96,7 +96,7 @@ function SpotDetails() {
             </div>
             <div className="reviews-container">
                 {reviews.length ? (
-                    <Reviews spot={spot} />
+                    <Reviews/>
                 ) : (
                     <p>Be the first to post a review!</p>
                 )}

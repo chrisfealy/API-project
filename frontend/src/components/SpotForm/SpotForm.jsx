@@ -42,7 +42,7 @@ function SpotForm({ spot, formType }) {
         if (img3 && !validImage(img3)) errors.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
         if (img4 && !validImage(img4)) errors.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
         setValidationErrors(errors)
-    }, [country, address, city, state, lat, lng, description, name, price, prevImg, img1, img2, img3, img4])
+    }, [country, address, city, state, lat, lng, description, name, price, prevImg, img1, img2, img3, img4, formType])
 
     const validImage = img => {
         if (img.endsWith('.png')) return true
