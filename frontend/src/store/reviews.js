@@ -42,6 +42,10 @@ export const createReview = (spotId, review) => async (dispatch) => {
         dispatch(postReview(review))
         return newReview
     }
+    else {
+        const error = await response.json()
+        return error
+    }
 }
 
 export const deleteReview = (reviewId) => async (dispatch) => {
