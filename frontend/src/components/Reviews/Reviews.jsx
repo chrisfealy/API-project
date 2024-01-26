@@ -5,6 +5,7 @@ import DeleteReview from "../DeleteReview"
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 function Reviews({ spot }) {
+    const sessionUser = useSelector(state => state.session.user)
     const spotReviews = useSelector(state => Object.values(state.reviews))
     const reviews = [...spotReviews].reverse()
 
@@ -22,9 +23,15 @@ function Reviews({ spot }) {
         <div>
             {reviews.map(review => (
                 <div key={review.id}>
-                    <h3>{review?.User.firstName}</h3>
+                    <h3>{review?.User?.firstName}</h3>
                     <p>{getMonth(review)} {getYear(review)}</p>
-                    <p>{review?.review}</p>
+                    <p>{review?.review} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae autem recusandae veniam suscipit consequatur corrupti cumque reiciendis, saepe in error nam modi reprehenderit quia cum velit nesciunt quaerat laudantium laborum nulla assumenda dicta explicabo veritatis iusto. Quo, animi autem? Quaerat minus ratione neque atque recusandae cumque dicta consectetur fugit nobis.</p>
+                    {(sessionUser.id === review.userId) && (
+                        <OpenModalButton
+                            modalComponent={<DeleteReview review={review}/>}
+                            buttonText='Delete'
+                        />
+                    )}
                 </div>
             ))}
         </div>

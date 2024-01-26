@@ -16,6 +16,9 @@ function SpotDetails() {
     const reviews = useSelector(state => Object.values(state.reviews))
     const images = spot?.SpotImages
 
+    let hasPosted = false
+    if(reviews.find(review => review.userId === sessionUser.id)) hasPosted = true
+
     const reserveBtn = e => {
         e.preventDefault()
         alert('Feature coming soon')
@@ -24,7 +27,7 @@ function SpotDetails() {
     useEffect(() => {
         dispatch(fetchSpot(spotId))
         dispatch(fetchSpotReviews(spotId))
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, reviews.length])
 
     return (
         <div className="spot-details-container">
@@ -84,7 +87,7 @@ function SpotDetails() {
                         </div>
                     )}
                 </div>
-                {sessionUser && (spot?.ownerId !== sessionUser?.id) && (
+                {sessionUser && !hasPosted && (spot?.ownerId !== sessionUser?.id) && (
                     <OpenModalButton
                         buttonText='Post Your Review'
                         modalComponent={<CreateReview spotId={spotId} />}
