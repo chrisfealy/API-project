@@ -15,7 +15,7 @@ function ManageSpots() {
 
     return (
         <div className="container">
-            <h2>Manage Your Spots</h2>
+            <h2>Manage Spots</h2>
             <div className="spot-container">
                 {!spots && <Link to='/spots/new'>Create a New Spot</Link>}
                 {spots.map(spot => (

@@ -34,7 +34,7 @@ function SpotForm({ spot, formType }) {
         if (!lng) errors.lng = 'Longitude is required'
         if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
         if (!name.length) errors.name = 'Name is required'
-        if (!price) errors.price = 'Price is required'
+        if (!price) errors.price = 'Price per night is required'
         if (formType === 'Create' && !prevImg) errors.prevImg = 'Preview image is required'
         if (prevImg && !validImage(prevImg)) errors.prevImg = 'Image URL must end in .png, .jpg, or .jpeg'
         if (img1 && !validImage(img1)) errors.img1 = 'Image URL must end in .png, .jpg, or .jpeg'
@@ -180,7 +180,7 @@ function SpotForm({ spot, formType }) {
                 <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
                 <label>
                     <textarea
-                        placeholder="Description"
+                        placeholder="Please write at least 30 characters."
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                     />

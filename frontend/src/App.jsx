@@ -9,7 +9,7 @@ import LandingPage from './components/LandingPage';
 import SpotDetails from './components/SpotDetails/SpotDetails';
 import ManageSpots from './components/ManageSpots';
 import CreateSpot from './components/CreateSpot';
-import UpdateSpot from './components/UpdateSpot/UpdateSpot';
+import UpdateSpot from './components/UpdateSpot';
 
 function Layout() {
   const dispatch = useDispatch();
