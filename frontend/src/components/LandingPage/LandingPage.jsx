@@ -13,7 +13,7 @@ function LandingPage() {
     }, [dispatch])
 
     return (
-        <div className="container">
+        <div className="landing-page-container">
             <div className="spot-container">
                 {spots.map(spot => (
                     <Spot

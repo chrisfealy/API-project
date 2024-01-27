@@ -1,3 +1,8 @@
+.landing-page-container {
+    display: flex;
+    justify-content: center;
+}
+
 .spot-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -15,4 +20,6 @@
 
 .spot-card-image {
     border-radius: 0.75rem;
+    width: 300px;
+    height: 200px;
 }
