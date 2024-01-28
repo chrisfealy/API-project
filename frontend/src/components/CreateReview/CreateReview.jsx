@@ -16,7 +16,7 @@ function CreateReview({ spotId }) {
     useEffect(() => {
         const errors = {}
         if(review.length < 10) errors.review = 'Review must be at least 10 characters'
-        if(rating < 1)
+        if(rating < 1) errors.rating = 'Rating is required'
         setValidationErrors(errors)
     }, [review, rating])
 
@@ -37,11 +37,13 @@ function CreateReview({ spotId }) {
         <div className="post-review-container">
             <h2>How was your stay?</h2>
             {submitted && validationErrors.errors && `${validationErrors.errors}`}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='review-form-container'>
                 <textarea
                     placeholder="Leave your review here..."
                     value={review}
                     onChange={e => setReview(e.target.value)}
+                    rows='5'
+                    cols='33'
                 />
                 <div className="rating-container" onMouseLeave={() => setActiveRating(rating)}>
                     <div onMouseEnter={() => setActiveRating(1)} onClick={() => handleRatingClick(1)}>
@@ -59,9 +61,15 @@ function CreateReview({ spotId }) {
                     <div onMouseEnter={() => setActiveRating(5)} onClick={() => handleRatingClick(5)}>
                         {activeRating >= 5 ? (<i className="fa-solid fa-star" />) : (<i className="fa-regular fa-star"></i>)}
                     </div>
-
+                    <span>Stars</span>
                 </div>
-                <button type='submit'>Submit Your Review</button>
+                <button
+                    type='submit'
+                    className='submit-review-btn'
+                    disabled={Object.values(validationErrors).length}
+                >
+                    Submit Your Review
+                </button>
             </form>
         </div>
     )

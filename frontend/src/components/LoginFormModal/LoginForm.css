@@ -32,7 +32,7 @@
 
 .login-btn {
     width: 90%;
-    background-color: rgb(255, 79, 79);
+    background-color: #FF5A5F;
     color: white;
     border: solid black 2px;
     box-shadow: 2px 2px black;
@@ -41,9 +41,9 @@
 
 .login-btn:disabled {
     background-color: white;
-    color: rgb(85, 85, 85);
-    border: solid rgb(85, 85, 85) 2px;
-    box-shadow: 2px 2px rgb(85, 85, 85);
+    color: #CCCCCC;
+    border: solid #CCCCCC 2px;
+    box-shadow: 2px 2px #CCCCCC;
 }
 
 .error {

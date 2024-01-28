@@ -14,11 +14,13 @@ function ManageSpots() {
     }, [dispatch])
 
     return (
-        <div className="container">
+        <div className="manage-spots-container">
             <h2>Manage Spots</h2>
             <div className="manage-spot-container">
                 {!spots.length ? (
-                    <Link to='/spots/new'>Create a New Spot</Link>
+                    <button className="manage-spot-btn">
+                        <Link to='/spots/new'>Create a New Spot</Link>
+                    </button>
                 ) : (spots.map(spot => (
                     <Spot
                         spot={spot}

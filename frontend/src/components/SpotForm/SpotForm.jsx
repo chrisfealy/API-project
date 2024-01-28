@@ -24,8 +24,6 @@ function SpotForm({ spot, formType }) {
     const [validationErrors, setValidationErrors] = useState({})
     const [submitted, setSubmitted] = useState(false)
 
-    console.log('VALIDATIONERRORS', validationErrors)
-
     useEffect(() => {
         const errors = {}
         if (!country.length) errors.country = 'Country is required'
