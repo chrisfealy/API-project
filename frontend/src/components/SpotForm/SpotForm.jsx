@@ -66,13 +66,9 @@ function SpotForm({ spot, formType }) {
                     .then(spot => {
                         navigate(`/spots/${spot.id}`)
                     })
-                    .catch(async (err) => {
-                        if (err.response) {
-                            const data = await err.json()
-                            if (data.errors) {
-                                setValidationErrors({ ...data.errors, ...validationErrors })
-                            }
-                        }
+                    .catch(async res => {
+                        const data = await res.json()
+                        if (data.errors) setValidationErrors(data.errors)
                     })
             }
             if (formType === 'Update') {
@@ -80,13 +76,9 @@ function SpotForm({ spot, formType }) {
                     .then(spot => {
                         navigate(`/spots/${spot.id}`)
                     })
-                    .catch(async (err) => {
-                        if (err.response) {
-                            const data = await err.json()
-                            if (data.errors) {
-                                setValidationErrors({ ...data.errors, ...validationErrors })
-                            }
-                        }
+                    .catch(async res => {
+                        const data = await res.json()
+                        if (data.errors) setValidationErrors(data.errors)
                     })
             }
         }
