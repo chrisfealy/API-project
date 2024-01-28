@@ -207,63 +207,67 @@ function SpotForm({ spot, formType }) {
                         {submitted && validationErrors.price && `${validationErrors.price}`}
                     </div>
                 </label>
-                <h3>Liven up your spot with photos</h3>
-                <p>Submit a link to at least one photo to publish your spot</p>
-                <label>
-                    <input
-                        type="text"
-                        placeholder="Preview Image URL"
-                        value={prevImg}
-                        onChange={e => setPrevImg(e.target.value)}
-                    />
-                    <div className="errors">
-                        {submitted && validationErrors.prevImg && `${validationErrors.prevImg}`}
+                {(formType === 'Create') && (
+                    <div>
+                        <h3>Liven up your spot with photos</h3>
+                        <p>Submit a link to at least one photo to publish your spot</p>
+                        <label>
+                            <input
+                                type="text"
+                                placeholder="Preview Image URL"
+                                value={prevImg}
+                                onChange={e => setPrevImg(e.target.value)}
+                            />
+                            <div className="errors">
+                                {submitted && validationErrors.prevImg && `${validationErrors.prevImg}`}
+                            </div>
+                        </label>
+                        <label>
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                value={img1}
+                                onChange={e => setImg1(e.target.value)}
+                            />
+                            <div className="errors">
+                                {submitted && validationErrors.img1 && `${validationErrors.img1}`}
+                            </div>
+                        </label>
+                        <label>
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                value={img2}
+                                onChange={e => setImg2(e.target.value)}
+                            />
+                            <div className="errors">
+                                {submitted && validationErrors.img2 && `${validationErrors.img2}`}
+                            </div>
+                        </label>
+                        <label>
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                value={img3}
+                                onChange={e => setImg3(e.target.value)}
+                            />
+                            <div className="errors">
+                                {submitted && validationErrors.img3 && `${validationErrors.img3}`}
+                            </div>
+                        </label>
+                        <label>
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                value={img4}
+                                onChange={e => setImg4(e.target.value)}
+                            />
+                            <div className="errors">
+                                {submitted && validationErrors.img4 && `${validationErrors.img4}`}
+                            </div>
+                        </label>
                     </div>
-                </label>
-                <label>
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={img1}
-                        onChange={e => setImg1(e.target.value)}
-                    />
-                    <div className="errors">
-                        {submitted && validationErrors.img1 && `${validationErrors.img1}`}
-                    </div>
-                </label>
-                <label>
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={img2}
-                        onChange={e => setImg2(e.target.value)}
-                    />
-                    <div className="errors">
-                        {submitted && validationErrors.img2 && `${validationErrors.img2}`}
-                    </div>
-                </label>
-                <label>
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={img3}
-                        onChange={e => setImg3(e.target.value)}
-                    />
-                    <div className="errors">
-                        {submitted && validationErrors.img3 && `${validationErrors.img3}`}
-                    </div>
-                </label>
-                <label>
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={img4}
-                        onChange={e => setImg4(e.target.value)}
-                    />
-                    <div className="errors">
-                        {submitted && validationErrors.img4 && `${validationErrors.img4}`}
-                    </div>
-                </label>
+                )}
                 <br />
                 <button
                     type="submit"
