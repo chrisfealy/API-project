@@ -193,6 +193,13 @@ module.exports = {
         email: 'masterhand@melee.com',
         hashedPassword: bcrypt.hashSync('password')
       },
+      {
+        firstName: 'Demo',
+        lastName: 'User',
+        username: 'DemoUser',
+        email: 'demo@user.io',
+        hashedPassword: bcrypt.hashSync('password')
+      },
     ], { validate: true });
   },
 
@@ -200,7 +207,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Mario', 'Luigi', 'Yoshi', 'Donkey Kong', 'Link', 'Samus', 'Kirby', 'Fox', 'Pikachu', 'Jigglypuff', 'Captain Falcon', 'Ness', 'Peach', 'Bowser', 'Dr. Mario', 'Sheik', 'Ganondorf', 'Young Link', 'Falco', 'Mewtwo', 'Pichu', 'Ice Climbers', 'Marth', 'Roy', 'Mr. Game & Watch', 'Master Hand'] }
+      username: { [Op.in]: ['Mario', 'Luigi', 'Yoshi', 'Donkey Kong', 'Link', 'Samus', 'Kirby', 'Fox', 'Pikachu', 'Jigglypuff', 'Captain Falcon', 'Ness', 'Peach', 'Bowser', 'Dr. Mario', 'Sheik', 'Ganondorf', 'Young Link', 'Falco', 'Mewtwo', 'Pichu', 'Ice Climbers', 'Marth', 'Roy', 'Mr. Game & Watch', 'Master Hand', 'DemoUser'] }
     }, {});
   }
 };
