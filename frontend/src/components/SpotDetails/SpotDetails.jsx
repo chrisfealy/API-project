@@ -27,7 +27,7 @@ function SpotDetails() {
     useEffect(() => {
         dispatch(fetchSpot(spotId))
         dispatch(fetchSpotReviews(spotId))
-    }, [dispatch, spotId, reviews.length])
+    }, [dispatch, spotId, reviews.length, images])
 
     return (
         <div className="spot-details-container">
@@ -98,7 +98,7 @@ function SpotDetails() {
                 {reviews.length ? (
                     <Reviews/>
                 ) : (
-                    (sessionUser?.id !== spot?.ownerId) && (<p>Be the first to post a review!</p>)
+                    (sessionUser && (sessionUser.id !== spot?.ownerId)) && (<p>Be the first to post a review!</p>)
                 )}
             </div>
         </div>

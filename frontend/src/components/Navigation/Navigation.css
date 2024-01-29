@@ -10,6 +10,7 @@
   display: flex;
   justify-content: space-between;
   margin: auto 30px;
+  border-bottom: #999999 solid 1px;
 }
 
 .nav-left {
@@ -27,5 +28,5 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-right: 3rem;
+  margin-right: 5rem;
 }

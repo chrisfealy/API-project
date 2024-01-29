@@ -27,6 +27,10 @@
     text-decoration: none;
 }
 
+.manage-spot-btn:hover {
+    cursor: pointer;
+}
+
 .manage-btn-div button {
     display: flex;
     align-items: center;

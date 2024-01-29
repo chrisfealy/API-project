@@ -34,7 +34,7 @@ function LoginFormModal() {
   };
 
   const handleDemoLogin = () => {
-    setCredential('Mario')
+    setCredential('DemoUser')
     setPassword('password')
     handleSubmit()
   }
