@@ -4,8 +4,6 @@
   flex-direction: column;
   background-color: white;
   border: solid 1px #ddd;
-  padding: 1rem;
-  gap: 1rem;
   top: 4.5rem;
   right: 5rem;
   border: 1px solid #ddd;
@@ -35,10 +33,26 @@
   height: 50px;
 }
 
+.nav-left h2 {
+  color: #FF5A5F;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1rem;
+}
+
+.nav-new-spot {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 15px;
+}
+
+.nav-new-spot:hover {
+  cursor: pointer;
+  background-color: #ddd;
+  color: black;
 }
 
 .profile-btn {
@@ -52,4 +66,21 @@
 .profile-btn:hover {
   cursor: pointer;
   box-shadow: 2px 2px #ddd;
+}
+
+.profile-div-header {
+  padding: .5rem 2rem .5rem 1rem;
+  border-bottom: solid 1px #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-div {
+  padding: .5rem 2rem .5rem 1rem;
+}
+
+.profile-div:hover {
+  cursor: pointer;
+  background-color: #eeeeee;
 }
