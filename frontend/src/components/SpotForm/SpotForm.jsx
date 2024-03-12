@@ -86,15 +86,16 @@ function SpotForm({ spot, formType }) {
 
     return (
         <div className="spot-form-container">
-            <h2>{formType === 'Create' ? 'Create a new Spot' : 'Update your Spot'}</h2>
-            <h3>Where&apos;s your place located?</h3>
-            <p>Guests will only get your exact address once they booked a reservation.</p>
-
             <form onSubmit={handleSubmit} className="spot-form">
-                <label>
-                    Country
-                    <div className="errors">
-                        {submitted && validationErrors.country && `${validationErrors.country}`}
+                <h2>{formType === 'Create' ? 'Create a new Spot' : 'Update your Spot'}</h2>
+                <h3>Where&apos;s your place located?</h3>
+                <p>Guests will only get your exact address once they booked a reservation.</p>
+                <div className="spot-form-input">
+                    <div className="spot-form-label">
+                        <p>Country</p>
+                        <div className="errors">
+                            {submitted && validationErrors.country && `${validationErrors.country}`}
+                        </div>
                     </div>
                     <input
                         type="text"
@@ -102,11 +103,13 @@ function SpotForm({ spot, formType }) {
                         value={country}
                         onChange={e => setCountry(e.target.value)}
                     />
-                </label>
-                <label>
-                    Street Address
-                    <div className="errors">
-                        {submitted && validationErrors.address && `${validationErrors.address}`}
+                </div>
+                <div className="spot-form-input">
+                    <div className="spot-form-label">
+                        <p>Street Address</p>
+                        <div className="errors">
+                            {submitted && validationErrors.address && `${validationErrors.address}`}
+                        </div>
                     </div>
                     <input
                         type="text"
@@ -114,65 +117,71 @@ function SpotForm({ spot, formType }) {
                         value={address}
                         onChange={e => setAddress(e.target.value)}
                     />
-                </label>
+                </div>
                 <div className="city-state">
-                    <label>
-                        <div className="city-label">
-                        City
-                        <div className="errors">
-                            {submitted && validationErrors.city && `${validationErrors.city}`}
-                        </div>
-                        </div>
-                        <div className="city-state-comma">
-                            <input
-                                type="text"
-                                placeholder="City"
-                                value={city}
-                                onChange={e => setCity(e.target.value)}
-                            />
-                            <span className="comma">,</span>
-                        </div>
-                    </label>
-                    <label>
-                        State
-                        <div className="errors">
-                            {submitted && validationErrors.state && `${validationErrors.state}`}
+                    <div className="spot-form-input">
+                        <div className="spot-form-label">
+                            <p>City</p>
+                            <div className="errors">
+                                {submitted && validationErrors.city && `${validationErrors.city}`}
+                            </div>
                         </div>
                         <input
                             type="text"
-                            placeholder="STATE"
+                            placeholder="City"
+                            value={city}
+                            onChange={e => setCity(e.target.value)}
+                        />
+                    </div>
+                    <div className="spot-form-input">
+                        <div className="spot-form-label">
+                            <p>State</p>
+                            <div className="errors">
+                                {submitted && validationErrors.state && `${validationErrors.state}`}
+                            </div>
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="State"
                             value={state}
                             onChange={e => setState(e.target.value)}
                         />
-                    </label>
+                    </div>
                 </div>
-                <label>
-                    Latitude
-                    <div className="errors">
-                        {submitted && validationErrors.lat && `${validationErrors.lat}`}
+                <div className="lng-lat">
+                    <div className="spot-form-input">
+                        <div className="spot-form-label">
+                            <p>Latitude</p>
+                            <div className="errors">
+                                {submitted && validationErrors.lat && `${validationErrors.lat}`}
+                            </div>
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Latitude"
+                            value={lat}
+                            onChange={e => setLat(e.target.value)}
+                        />
                     </div>
-                    <input
-                        type="text"
-                        placeholder="Latitude"
-                        value={lat}
-                        onChange={e => setLat(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Longitude
-                    <div className="errors">
-                        {submitted && validationErrors.lng && `${validationErrors.lng}`}
+                    <div className="spot-form-input">
+                        <div className="spot-form-label">
+                            <p>Longitude</p>
+                            <div className="errors">
+                                {submitted && validationErrors.lng && `${validationErrors.lng}`}
+                            </div>
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Longitude"
+                            value={lng}
+                            onChange={e => setLng(e.target.value)}
+                        />
                     </div>
-                    <input
-                        type="text"
-                        placeholder="Longitude"
-                        value={lng}
-                        onChange={e => setLng(e.target.value)}
-                    />
-                </label>
+                </div>
+                <hr className="spot-form-line" />
                 <h3>Describe your place to guests</h3>
                 <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
-                <label>
+                <div className="spot-form-input">
                     <textarea
                         placeholder="Please write at least 30 characters."
                         value={description}
@@ -182,10 +191,11 @@ function SpotForm({ spot, formType }) {
                     <div className="errors">
                         {submitted && validationErrors.description && `${validationErrors.description}`}
                     </div>
-                </label>
+                </div>
+                <hr className="spot-form-line" />
                 <h3>Create a title for your spot</h3>
                 <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
-                <label>
+                <div className="spot-form-input">
                     <input
                         type="text"
                         placeholder="Name of your spot"
@@ -195,30 +205,30 @@ function SpotForm({ spot, formType }) {
                     <div className="errors">
                         {submitted && validationErrors.name && `${validationErrors.name}`}
                     </div>
-                </label>
+                </div>
                 <div className="spot-form-price-container">
-                <h3>Set a base price for your spot</h3>
-                <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-                <label>
-                    <div className="spot-form-price">
-                        <span className="dollar-sign">$</span>
-                        <input
-                            type="text"
-                            placeholder="Price per night (USD)"
-                            value={price}
-                            onChange={e => setPrice(e.target.value)}
-                        />
+                    <h3>Set a base price for your spot</h3>
+                    <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                    <div className="spot-form-input">
+                        <div className="spot-form-price">
+                            <span className="dollar-sign">$</span>
+                            <input
+                                type="text"
+                                placeholder="Price per night (USD)"
+                                value={price}
+                                onChange={e => setPrice(e.target.value)}
+                            />
+                        </div>
+                        <div className="errors">
+                            {submitted && validationErrors.price && `${validationErrors.price}`}
+                        </div>
                     </div>
-                    <div className="errors">
-                        {submitted && validationErrors.price && `${validationErrors.price}`}
-                    </div>
-                </label>
                 </div>
                 {(formType === 'Create') && (
                     <div className="spot-form-images">
                         <h3>Liven up your spot with photos</h3>
                         <p>Submit a link to at least one photo to publish your spot</p>
-                        <label>
+                        <div className="spot-form-input">
                             <input
                                 type="text"
                                 placeholder="Preview Image URL"
@@ -228,8 +238,8 @@ function SpotForm({ spot, formType }) {
                             <div className="errors">
                                 {submitted && validationErrors.prevImg && `${validationErrors.prevImg}`}
                             </div>
-                        </label>
-                        <label>
+                        </div>
+                        <div className="spot-form-input">
                             <input
                                 type="text"
                                 placeholder="Image URL"
@@ -239,8 +249,8 @@ function SpotForm({ spot, formType }) {
                             <div className="errors">
                                 {submitted && validationErrors.img1 && `${validationErrors.img1}`}
                             </div>
-                        </label>
-                        <label>
+                        </div>
+                        <div className="spot-form-input">
                             <input
                                 type="text"
                                 placeholder="Image URL"
@@ -250,8 +260,8 @@ function SpotForm({ spot, formType }) {
                             <div className="errors">
                                 {submitted && validationErrors.img2 && `${validationErrors.img2}`}
                             </div>
-                        </label>
-                        <label>
+                        </div>
+                        <div className="spot-form-input">
                             <input
                                 type="text"
                                 placeholder="Image URL"
@@ -261,8 +271,8 @@ function SpotForm({ spot, formType }) {
                             <div className="errors">
                                 {submitted && validationErrors.img3 && `${validationErrors.img3}`}
                             </div>
-                        </label>
-                        <label>
+                        </div>
+                        <div className="spot-form-input">
                             <input
                                 type="text"
                                 placeholder="Image URL"
@@ -272,12 +282,13 @@ function SpotForm({ spot, formType }) {
                             <div className="errors">
                                 {submitted && validationErrors.img4 && `${validationErrors.img4}`}
                             </div>
-                        </label>
+                        </div>
                     </div>
                 )}
+                <hr className="spot-form-line" />
                 <button
                     type="submit"
-                    className="spot-form-submit-btn"
+                    className="spot-form-btn"
                 >
                     {formType} Spot
                 </button>
