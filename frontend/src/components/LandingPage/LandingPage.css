@@ -1,12 +1,13 @@
 .landing-page-container {
-    margin-top: 2rem;
     display: flex;
     justify-content: center;
+    margin: 0 5rem;
 }
 
 .spot-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
 }
 
 .spot-card {
@@ -21,23 +22,35 @@
 
 .spot-card-image {
     border-radius: 0.75rem;
-    width: 300px;
-    height: 200px;
+    aspect-ratio: 20/19;
+    width: 100%;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1879px) {
+    .spot-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 1639px) {
+    .spot-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1127px) {
     .spot-container {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
     .spot-container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 549px) {
     .spot-container {
         grid-template-columns: repeat(1, 1fr);
     }

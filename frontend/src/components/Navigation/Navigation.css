@@ -1,5 +1,16 @@
 .profile-dropdown {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: solid 1px #ddd;
+  padding: 1rem;
+  gap: 1rem;
+  top: 4.5rem;
+  right: 5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px #ddd;
 }
 
 .hidden {
@@ -9,8 +20,8 @@
 .nav-container {
   display: flex;
   justify-content: space-between;
-  margin: auto 30px;
-  border-bottom: #999999 solid 1px;
+  padding: 1rem;
+  margin: 0 4rem;
 }
 
 .nav-left {
@@ -28,5 +39,17 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-right: 5rem;
+}
+
+.profile-btn {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: solid 1px #ddd;
+  border-radius: 30px;
+}
+
+.profile-btn:hover {
+  cursor: pointer;
+  box-shadow: 2px 2px #ddd;
 }
