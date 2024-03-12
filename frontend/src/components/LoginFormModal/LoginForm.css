@@ -1,52 +1,65 @@
-.login-conatiner input, .login-conatiner label {
-    display: block;
-}
-
 .login-container {
-    height: 40vh;
-    width: 20vw;
-    padding-left: 1vw;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    width: 15rem;
 }
 
 .login-header {
     text-align: center;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: bold;
     padding: 1rem;
+}
+
+.login-input input {
+    height: 2rem;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;
+    border: #ddd solid 1px;
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
-.login-input {
-    border: solid black 2px;
-    height: 20px;
-    background-color: aliceblue;
-    width: 88%;
-}
-
 .login-btn {
-    width: 90%;
+    width: 100%;
     background-color: #FF5A5F;
     color: white;
-    border: solid black 2px;
-    box-shadow: 2px 2px black;
+    font-weight: bold;
+    border-radius: 0.5rem;
     height: 40px;
 }
 
-.login-btn:disabled {
+.login-btn:hover {
+    cursor: pointer;
+}
+
+.demo-login-btn {
+    width: 100%;
+    color: #222;
     background-color: white;
-    color: #CCCCCC;
-    border: solid #CCCCCC 2px;
-    box-shadow: 2px 2px #CCCCCC;
+    border: 1px solid #222;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.demo-login-btn:hover {
+    cursor: pointer;
+    background-color: #eee;
 }
 
 .error {
     color: red;
     text-align: center;
+}
+
+.login-line {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
 }
