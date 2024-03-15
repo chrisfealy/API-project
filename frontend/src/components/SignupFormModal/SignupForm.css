@@ -28,9 +28,8 @@
 }
 
 .signup-input input {
-    height: 2rem;
     border-radius: 0.5rem;
-    padding-left: 0.5rem;
+    padding: 0.5rem;
     border: #ddd solid 1px;
     width: 100%;
 }
@@ -41,11 +40,13 @@
     color: white;
     font-weight: bold;
     border-radius: 0.5rem;
-    height: 40px;
+    padding: 0.5rem;
 }
 
 .signup-btn:hover {
     cursor: pointer;
+    background-color: rgba(255, 90, 95, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
 .error {

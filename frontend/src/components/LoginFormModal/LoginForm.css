@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    width: 15rem;
 }
 
 .login-header {
@@ -14,9 +13,8 @@
 }
 
 .login-input input {
-    height: 2rem;
     border-radius: 0.5rem;
-    padding-left: 0.5rem;
+    padding: 0.5rem;
     border: #ddd solid 1px;
 }
 
@@ -33,11 +31,13 @@
     color: white;
     font-weight: bold;
     border-radius: 0.5rem;
-    height: 40px;
+    padding: 0.5rem;
 }
 
 .login-btn:hover {
     cursor: pointer;
+    background-color: rgba(255, 90, 95, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
 .demo-login-btn {
@@ -52,6 +52,7 @@
 .demo-login-btn:hover {
     cursor: pointer;
     background-color: #eee;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
 .error {

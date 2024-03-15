@@ -8,7 +8,7 @@
   right: 5rem;
   border: 1px solid #ddd;
   border-radius: 0.5rem;
-  box-shadow: 2px 2px #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
 .hidden {
@@ -51,7 +51,7 @@
 
 .nav-new-spot:hover {
   cursor: pointer;
-  background-color: #ddd;
+  background-color: #f1f1f1;
   color: black;
 }
 
@@ -65,7 +65,7 @@
 
 .profile-btn:hover {
   cursor: pointer;
-  box-shadow: 2px 2px #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
 .profile-div-header {
@@ -83,4 +83,9 @@
 .profile-div:hover {
   cursor: pointer;
   background-color: #eeeeee;
+}
+
+.nav-line {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2rem;
 }
